@@ -1,6 +1,7 @@
 package hu.ulyssys.java.course.blog.demo.blogger.mbean;
 
 import hu.ulyssys.java.course.blog.demo.blogger.entity.BlogPost;
+import hu.ulyssys.java.course.blog.demo.blogger.entity.Category;
 import hu.ulyssys.java.course.blog.demo.blogger.service.BlogPostService;
 import org.primefaces.PrimeFaces;
 
@@ -20,6 +21,8 @@ public class BlogPostCRUDMbean implements Serializable {
     private List<BlogPost> list;
 
     private BlogPost selectedBlogPost;
+
+    private String category;
 
     @Inject
     private BlogPostService blogPostService;
@@ -56,6 +59,20 @@ public class BlogPostCRUDMbean implements Serializable {
         list = blogPostService.getAll();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Sikeres törlés"));
         selectedBlogPost = new BlogPost();
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+        selectedBlogPost.setCategory(Category.valueOf(category));
+        System.out.println("A választott kategória: "+category);
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public Category[] getCategories(){
+        return Category.values();
     }
 
     public List<BlogPost> getList() {

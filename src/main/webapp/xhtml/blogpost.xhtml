@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xml:lang="en" lang="en">
+<h:head>
+    <title>BLOGPOST demo</title>
+</h:head>
+<body>
+<h:form id="form">
+    <p:growl id="growl" showDetail="false"/>
+
+    <p:toolbar>
+        <p:toolbarGroup id="functionGroup">
+            <p:commandButton id="add" icon="pi pi-plus" process="@this" value="Új hozzáadása"
+                             actionListener="#{blogPostCRUDMbean.initSave}" update="@([id$=authorForm])" oncomplete="PF('authorDialog').show()"/>
+
+            <p:commandButton disabled="#{blogPostCRUDMbean.selectedBlogPost.id==null}" id="delete" icon="pi pi-times"
+                             process="@this" value="Törlés"
+                             actionListener="#{blogPostCRUDMbean.remove}"
+                             update="@form">
+                <p:confirm header="Törlés" message="Biztos vagy benne?" icon="pi pi-times"/>
+            </p:commandButton>
+            <!-- Hákolt, de müködő megoldás @([id$=formPanel]) -->
+            <p:commandButton id="update" disabled="#{blogPostCRUDMbean.selectedBlogPost.id==null}" process="@this" value="Módosítás" icon="pi pi-pencil" oncomplete="PF('authorDialog').show()"
+                             update="@([id$=authorForm])"/>
+        </p:toolbarGroup>
+
+        <p:toolbarGroup id="utilGroup" align="right">
+            <p:commandButton id="columntTogglerBtn" icon="pi pi-table"/>
+            <p:columnToggler trigger="columntTogglerBtn" datasource="table"/>
+
+            <p:commandButton value="XLS" styleClass="p-mr-2 p-mb-2">
+                <p:dataExporter type="xls" target="table" fileName="export"/>
+            </p:commandButton>
+
+            <p:commandButton value="XLXS" styleClass="p-mr-2 p-mb-2">
+                <p:dataExporter type="xlsxstream" target="table" fileName="export"/>
+            </p:commandButton>
+
+            <p:commandButton value="PDF" styleClass="p-mr-2 p-mb-2">
+                <p:dataExporter type="pdf" target="table" fileName="export"/>
+            </p:commandButton>
+        </p:toolbarGroup>
+    </p:toolbar>
+
+
+    <p:dataTable id="table" value="#{blogPostCRUDMbean.list}" var="author" rows="10"
+                 selectionMode="single" selection="#{blogPostCRUDMbean.selectedBlogPost}" rowKey="#{author.id}"
+                 paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,{ShowAll|'All'}">
+        <p:ajax event="rowSelect" update="@form"/>
+        <p:column style="width:2rem" exportable="false"> <p:rowToggler/> </p:column>
+        <p:column toggleable="false" sortBy="#{author.id}" filterBy="#{author.id}" filterMatchMode="contains"
+                  headerText="ID">
+            <h:outputText value="#{author.id}"/>
+        </p:column>
+        <p:column sortBy="#{author.title}" filterBy="#{author.title}" filterMatchMode="contains"
+                  headerText="Cím">
+            <h:outputText value="#{author.title}"/>
+        </p:column>
+        <p:column sortBy="#{author.category}" filterBy="#{author.category}" filterMatchMode="contains"
+                  headerText="Kategória">
+            <h:outputText value="#{author.category}"/>
+        </p:column>
+        <p:column sortBy="#{author.publishedDate}" filterBy="#{author.publishedDate}" filterMatchMode="contains"
+                  headerText="Megosztás ideje">
+            <h:outputText value="#{author.publishedDate}"/>
+        </p:column>
+        <p:column sortBy="#{author.lastModifiedDate}" filterBy="#{author.lastModifiedDate}" filterMatchMode="contains"
+                  headerText="Utolsó módosítás dátuma">
+            <h:outputText value="#{author.lastModifiedDate}"/>
+        </p:column>
+        <p:rowExpansion>
+            <div>
+                Létrehozás dátuma: #{author.createdDate}
+            </div>
+        </p:rowExpansion>
+    </p:dataTable>
+
+
+    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="400">
+        <p:commandButton value="Nem" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+        <p:commandButton value="Igen" type="button" styleClass="ui-confirmdialog-yes"/>
+    </p:confirmDialog>
+
+</h:form>
+
+
+<p:dialog id="authorDialog" widgetVar="authorDialog" header="Form" modal="true" closable="true">
+    <h:form id="authorForm">
+        <p:panelGrid layout="grid" columns="2" id="formPanel" style="width:450px"
+        >
+            <p:outputLabel value="Cím"/>
+            <p:inputText required="true" requiredMessage="A Cím megadása kötelező"
+                         value="#{blogPostCRUDMbean.selectedBlogPost.title}"/>
+
+            <p:outputLabel value="Megosztás ideje"/>
+            <p:datePicker id="basic" value="#{blogPostCRUDMbean.selectedBlogPost.publishedDate}" />
+
+            <p:outputLabel value="Kategória"/>
+            <p:selectOneMenu value="#{blogPostCRUDMbean.category}">
+                <f:selectItem itemLabel="Select One" itemValue=""/>
+                <f:selectItems value="#{blogPostCRUDMbean.categories}"/>
+            </p:selectOneMenu>
+
+            <p:commandButton value="Mentés" icon="pi pi-save" actionListener="#{blogPostCRUDMbean.save()}" validateClient="true"
+                             process="formPanel" update=":form">
+            </p:commandButton>
+        </p:panelGrid>
+    </h:form>
+</p:dialog>
+</body>
+</html>

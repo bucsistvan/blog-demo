@@ -3,9 +3,11 @@ package hu.ulyssys.java.course.blog.demo.blogger.service.impl;
 import hu.ulyssys.java.course.blog.demo.blogger.entity.BlogPost;
 import hu.ulyssys.java.course.blog.demo.blogger.service.BlogPostService;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApplicationScoped
 public class BlogPostServiceImpl implements BlogPostService {
 
     List<BlogPost> list = new ArrayList();
