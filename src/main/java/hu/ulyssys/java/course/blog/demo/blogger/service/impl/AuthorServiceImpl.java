@@ -3,9 +3,11 @@ package hu.ulyssys.java.course.blog.demo.blogger.service.impl;
 import hu.ulyssys.java.course.blog.demo.blogger.entity.Author;
 import hu.ulyssys.java.course.blog.demo.blogger.service.AuthorService;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApplicationScoped
 public class AuthorServiceImpl implements AuthorService {
 
     List<Author> list = new ArrayList();
