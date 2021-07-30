@@ -59,7 +59,8 @@
                   headerText="ID">
             <h:outputText value="#{author.id}"/>
         </p:column>
-        <p:column sortBy="#{author.firstName}" filterBy="#{author.firstName}" filterMatchMode="contains" headerText="Keresztnév">
+        <p:column sortBy="#{author.firstName}" filterBy="#{author.firstName}" filterMatchMode="contains"
+                  headerText="Keresztnév">
             <h:outputText value="#{author.firstName}"/>
         </p:column>
         <p:column sortBy="#{author.lastName}" filterBy="#{author.lastName}" filterMatchMode="contains"
@@ -99,10 +100,11 @@
                          value="#{authorCRUDMbean.selectedAuthor.firstName}"/>
 
             <p:outputLabel value="Vezetéknév"/>
-            <p:inputText required="true" requiredMessage="A vezetéknév megadása kötelező" value="#{authorCRUDMbean.selectedAuthor.lastName}"/>
+            <p:inputText required="true" requiredMessage="A vezetéknév megadása kötelező"
+                         value="#{authorCRUDMbean.selectedAuthor.lastName}"/>
 
             <p:outputLabel value="Felhasználónév"/>
-            <p:inputText thousandSeparator="" decimalPlaces="0" required="true" requiredMessage="A felhasználónév megadás kötelező"
+            <p:inputText required="true" requiredMessage="A felhasználónév megadás kötelező"
                          value="#{authorCRUDMbean.selectedAuthor.userName}"/>
 
             <p:commandButton value="Mentés" icon="pi pi-save" actionListener="#{authorCRUDMbean.save()}" validateClient="true"
