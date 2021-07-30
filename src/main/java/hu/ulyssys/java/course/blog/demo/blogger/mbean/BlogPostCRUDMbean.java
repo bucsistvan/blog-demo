@@ -12,8 +12,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -42,10 +40,10 @@ public class BlogPostCRUDMbean implements Serializable {
 
 
     public void save() {
-        Date date = new Date(System.currentTimeMillis());
-        selectedBlogPost.setLastModifiedDate(date);
+        selectedBlogPost.setLastModifiedDate(new Date(System.currentTimeMillis()));
         if (selectedBlogPost.getId() == null) {
             selectedBlogPost.setId(System.currentTimeMillis());
+            selectedBlogPost.setCreatedDate(new Date(System.currentTimeMillis()));
             blogPostService.add(selectedBlogPost);
             list = blogPostService.getAll();
             selectedBlogPost = new BlogPost();
@@ -69,7 +67,6 @@ public class BlogPostCRUDMbean implements Serializable {
     public void setCategory(String category) {
         this.category = category;
         selectedBlogPost.setCategory(Category.valueOf(category));
-        System.out.println("A választott kategória: "+category);
     }
 
     public String getCategory() {

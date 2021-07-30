@@ -100,11 +100,10 @@
                          value="#{blogPostCRUDMbean.selectedBlogPost.title}"/>
 
             <p:outputLabel value="Megosztás ideje"/>
-            <p:datePicker id="basic" value="#{blogPostCRUDMbean.selectedBlogPost.publishedDate}" />
+            <p:datePicker id="basic" value="#{blogPostCRUDMbean.selectedBlogPost.publishedDate}" showTime="true"/>
 
             <p:outputLabel value="Kategória"/>
             <p:selectOneMenu value="#{blogPostCRUDMbean.category}">
-                <f:selectItem itemLabel="Select One" itemValue=""/>
                 <f:selectItems value="#{blogPostCRUDMbean.categories}"/>
             </p:selectOneMenu>
 

@@ -37,10 +37,10 @@ public class AuthorCRUDMbean implements Serializable {
 
 
     public void save() {
-        Date date = new Date(System.currentTimeMillis());
-        selectedAuthor.setLastModifiedDate(date);
+        selectedAuthor.setLastModifiedDate(new Date(System.currentTimeMillis()));
         if (selectedAuthor.getId() == null) {
             selectedAuthor.setId(System.currentTimeMillis());
+            selectedAuthor.setCreatedDate(new Date(System.currentTimeMillis()));
             authorService.add(selectedAuthor);
             list = authorService.getAll();
             selectedAuthor = new Author();
