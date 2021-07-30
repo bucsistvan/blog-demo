@@ -54,6 +54,7 @@
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                  rowsPerPageTemplate="5,10,{ShowAll|'All'}">
         <p:ajax event="rowSelect" update="@form"/>
+        <p:column style="width:2rem" exportable="false"> <p:rowToggler/> </p:column>
         <p:column toggleable="false" sortBy="#{author.id}" filterBy="#{author.id}" filterMatchMode="contains"
                   headerText="ID">
             <h:outputText value="#{author.id}"/>
@@ -75,7 +76,7 @@
         </p:column>
         <p:rowExpansion>
             <div>
-                Létrhozás dátuma: #{author.createdDate}
+                Létrehozás dátuma: #{author.createdDate}
             </div>
         </p:rowExpansion>
     </p:dataTable>
