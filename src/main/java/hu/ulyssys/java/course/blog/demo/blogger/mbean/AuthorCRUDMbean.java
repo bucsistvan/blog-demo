@@ -7,10 +7,14 @@ import org.primefaces.PrimeFaces;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
+@Named
+@ViewScoped
 public class AuthorCRUDMbean implements Serializable {
 
     private List<Author> list;
@@ -27,6 +31,11 @@ public class AuthorCRUDMbean implements Serializable {
     }
 
     public void initSave() {
+        selectedAuthor = new Author();
+    }
+
+
+    public void save() {
         if (selectedAuthor.getId() == null) {
             selectedAuthor.setId(System.currentTimeMillis());
             authorService.add(selectedAuthor);
