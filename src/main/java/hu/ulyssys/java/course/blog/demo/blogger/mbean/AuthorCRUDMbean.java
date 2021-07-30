@@ -11,6 +11,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Named
@@ -36,6 +37,8 @@ public class AuthorCRUDMbean implements Serializable {
 
 
     public void save() {
+        Date date = new Date(System.currentTimeMillis());
+        selectedAuthor.setLastModifiedDate(date);
         if (selectedAuthor.getId() == null) {
             selectedAuthor.setId(System.currentTimeMillis());
             authorService.add(selectedAuthor);

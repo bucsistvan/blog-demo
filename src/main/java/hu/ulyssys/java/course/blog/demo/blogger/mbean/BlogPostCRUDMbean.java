@@ -12,6 +12,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Named
@@ -39,6 +42,8 @@ public class BlogPostCRUDMbean implements Serializable {
 
 
     public void save() {
+        Date date = new Date(System.currentTimeMillis());
+        selectedBlogPost.setLastModifiedDate(date);
         if (selectedBlogPost.getId() == null) {
             selectedBlogPost.setId(System.currentTimeMillis());
             blogPostService.add(selectedBlogPost);
